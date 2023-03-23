@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using LocalFootballTeam.Models.Models;
-using System.Runtime.CompilerServices;
+using LocalFootballTeam.Services.Interfaces;
 
 namespace LocalFootballTeam.Controllers
 {
@@ -9,36 +8,25 @@ namespace LocalFootballTeam.Controllers
     [ApiController]
     public class TeamsController : ControllerBase
     {
-        private static List<Team> teams = new List<Team>
-            {
-                new Team
-                {
-                    Id = 1,
-                    Name = "LKS Sanoczanka",
-                    Addres = "Święte 130",
-                    StartYear = "1947",
-                    Logo="sanoczanka.png"
-                },
-                new Team
-                {
-                    Id = 2,
-                    Name = "Dąb Dobkowice",
-                    Addres = "Dabkowice 208",
-                    StartYear = "1952",
-                    Logo="dabkowice.png"
-                }
-            };
+        private readonly ITeamService _teamService;
+
+        public TeamsController(ITeamService teamService)
+        {
+            _teamService = teamService;
+        }
 
         [HttpGet]
         public async Task<ActionResult<List<Team>>> GetAllTeams()
         {
-            return Ok(teams);
+            var result = _teamService.GetAllTeams();
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Team>> GetTeam(int id)
         {
-            var result = teams.Find(x => x.Id == id);
+            var result = _teamService.GetTeam(id);
 
             if (result == null)
                 return NotFound("Team doesn't exists");
@@ -49,35 +37,29 @@ namespace LocalFootballTeam.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Team>>> AddTeam(Team team)
         {
-            teams.Add(team);
-            return Ok(teams);
+            var result = _teamService.AddTeam(team);
+
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<List<Team>>> UpdateTeam(int id, Team team)
         {
-            var result = teams.Find(x => x.Id == id);
+            var result = _teamService.UpdateTeam(team, id);
 
             if (result == null)
                 return NotFound("Team doesn't exists");
 
-            result.Name = team.Name;
-            result.Addres = team.Addres;
-            result.StartYear = team.StartYear;
-            result.Logo = team.Logo;
-
-            return Ok(teams);
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<Team>> DeleteTeam(int id)
         {
-            var result = teams.Find(x => x.Id == id);
+            var result = _teamService.DeleteTeam(id);
 
             if (result == null)
                 return NotFound("Team doesn't exists");
-
-            teams.Remove(result);
 
             return Ok(result);
         }
