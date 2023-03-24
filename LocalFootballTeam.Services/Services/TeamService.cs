@@ -1,58 +1,47 @@
-﻿using LocalFootballTeam.Models.Models;
+﻿using LocalFootballTeam.Migrations;
+using LocalFootballTeam.Models.Models;
 using LocalFootballTeam.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace LocalFootballTeam.Services.Services
 {
     public class TeamService : ITeamService
     {
-        private static List<Team> teams = new List<Team>
-            {
+        private static List<Team> teams; 
 
-                new Team
-                {
-                    Id = 1,
-                    Name = "LKS Sanoczanka",
-                    Addres = "Święte 130",
-                    StartYear = "1947",
-                    Logo="sanoczanka.png"
-                },
-                new Team
-                {
-                    Id = 2,
-                    Name = "Dąb Dobkowice",
-                    Addres = "Dabkowice 208",
-                    StartYear = "1952",
-                    Logo="dabkowice.png"
-                }
-            };
+        private readonly DataContext _context;
 
-
-        public List<Team> GetAllTeams()
+        public TeamService(DataContext context)
         {
-            var result = teams;
-
-            return result;
+            _context = context;
         }
 
-        public Team GetTeam(int id)
+        public async Task<List<Team>> GetAllTeams()
         {
-            var result = teams.Find(x => x.Id == id);
+            return await _context.Teams.ToListAsync();
+        }
+
+        public async Task<Team> GetTeam(int id)
+        {
+            var result = await _context.Teams.FindAsync(id);
 
             if (result == null)
                 return null;
 
             return result;
         }
-        public List<Team> AddTeam(Team team)
+
+        public async Task<List<Team>> AddTeam(Team team)
         {
-            teams.Add(team); 
-            
-            return teams;
+            _context.Teams.Add(team);
+            await _context.SaveChangesAsync();
+
+            return await _context.Teams.ToListAsync();
         }
 
-        public List<Team> UpdateTeam(Team team, int id)
+        public async Task<List<Team>> UpdateTeam(Team team, int id)
         {
-            var result = teams.Find(x => x.Id == id);
+            var result = await _context.Teams.FindAsync(id);
 
             if (result == null)
                 return null;
@@ -62,19 +51,23 @@ namespace LocalFootballTeam.Services.Services
             result.StartYear = team.StartYear;
             result.Logo = team.Logo;
 
-            return teams;
+            await _context.SaveChangesAsync();
+
+            return await _context.Teams.ToListAsync();
         }
 
-        public List<Team> DeleteTeam(int id)
+        public async Task<List<Team>> DeleteTeam(int id)
         {
-            var result = teams.Find(x => x.Id == id);
+            var result = await _context.Teams.FindAsync(id);
 
             if (result == null)
                 return null;
 
-            teams.Remove(result); 
-            
-            return teams;
+            _context.Teams.Remove(result);
+            await _context.SaveChangesAsync();
+
+
+            return await _context.Teams.ToListAsync(); 
         }
     }
 }

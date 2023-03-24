@@ -18,7 +18,7 @@ namespace LocalFootballTeam.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Team>>> GetAllTeams()
         {
-            var result = _teamService.GetAllTeams();
+            var result = await _teamService.GetAllTeams();
 
             return Ok(result);
         }
@@ -26,7 +26,7 @@ namespace LocalFootballTeam.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Team>> GetTeam(int id)
         {
-            var result = _teamService.GetTeam(id);
+            var result = await _teamService.GetTeam(id);
 
             if (result == null)
                 return NotFound("Team doesn't exists");
@@ -37,7 +37,7 @@ namespace LocalFootballTeam.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Team>>> AddTeam(Team team)
         {
-            var result = _teamService.AddTeam(team);
+            var result = await _teamService.AddTeam(team);
 
             return Ok(result);
         }
@@ -45,7 +45,7 @@ namespace LocalFootballTeam.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<List<Team>>> UpdateTeam(int id, Team team)
         {
-            var result = _teamService.UpdateTeam(team, id);
+            var result = await _teamService.UpdateTeam(team, id);
 
             if (result == null)
                 return NotFound("Team doesn't exists");
@@ -56,7 +56,7 @@ namespace LocalFootballTeam.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Team>> DeleteTeam(int id)
         {
-            var result = _teamService.DeleteTeam(id);
+            var result = await _teamService.DeleteTeam(id);
 
             if (result == null)
                 return NotFound("Team doesn't exists");

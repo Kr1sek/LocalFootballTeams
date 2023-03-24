@@ -1,6 +1,7 @@
 using LocalFootballTeam.Services.Services;
 using LocalFootballTeam.Services.Interfaces;
 using Microsoft.AspNetCore.Components.Forms;
+using LocalFootballTeam.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddDbContext<DataContext>();
 
 var app = builder.Build();
 

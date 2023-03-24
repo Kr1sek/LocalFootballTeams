@@ -9,11 +9,11 @@ namespace LocalFootballTeam.Services.Interfaces
 {
     public interface ITeamService
     {
-        List<Team> GetAllTeams();
-        Team GetTeam(int id);
-        List<Team> AddTeam(Team team);
-        List<Team> UpdateTeam(Team team, int id);
-        List<Team> DeleteTeam(int id);
+        Task<List<Team>> GetAllTeams();
+        Task<Team> GetTeam(int id);
+        Task<List<Team>> AddTeam(Team team);
+        Task<List<Team>> UpdateTeam(Team team, int id);
+        Task<List<Team>> DeleteTeam(int id);
 
 
     }
