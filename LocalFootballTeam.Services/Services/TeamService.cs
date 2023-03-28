@@ -7,7 +7,6 @@ namespace LocalFootballTeam.Services.Services
 {
     public class TeamService : ITeamService
     {
-        private static List<Team> teams; 
 
         private readonly DataContext _context;
 
@@ -16,11 +15,14 @@ namespace LocalFootballTeam.Services.Services
             _context = context;
         }
 
+        #region GetAllTeams
         public async Task<List<Team>> GetAllTeams()
         {
             return await _context.Teams.ToListAsync();
         }
+        #endregion
 
+        #region GetTeam
         public async Task<Team> GetTeam(int id)
         {
             var result = await _context.Teams.FindAsync(id);
@@ -30,7 +32,9 @@ namespace LocalFootballTeam.Services.Services
 
             return result;
         }
+        #endregion
 
+        #region AddTeam
         public async Task<List<Team>> AddTeam(Team team)
         {
             _context.Teams.Add(team);
@@ -38,7 +42,9 @@ namespace LocalFootballTeam.Services.Services
 
             return await _context.Teams.ToListAsync();
         }
+        #endregion
 
+        #region UpdateTeam
         public async Task<List<Team>> UpdateTeam(Team team, int id)
         {
             var result = await _context.Teams.FindAsync(id);
@@ -55,7 +61,9 @@ namespace LocalFootballTeam.Services.Services
 
             return await _context.Teams.ToListAsync();
         }
+        #endregion
 
+        #region DeleteTeam
         public async Task<List<Team>> DeleteTeam(int id)
         {
             var result = await _context.Teams.FindAsync(id);
@@ -69,5 +77,6 @@ namespace LocalFootballTeam.Services.Services
 
             return await _context.Teams.ToListAsync(); 
         }
+        #endregion
     }
 }

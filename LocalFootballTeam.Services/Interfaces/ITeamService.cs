@@ -15,6 +15,5 @@ namespace LocalFootballTeam.Services.Interfaces
         Task<List<Team>> UpdateTeam(Team team, int id);
         Task<List<Team>> DeleteTeam(int id);
 
-
     }
 }

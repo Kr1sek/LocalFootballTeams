@@ -10,16 +10,19 @@ namespace LocalFootballTeam.Migrations
 {
     public class DataContext : DbContext
     {
+
         public DataContext(DbContextOptions<DataContext> options) : base(options) 
         {
             
         }
 
+        #region OnConfiguring
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=LocalFootballTeamDB;Trusted_Connection=True;TrustServerCertificate=true;");
         }
+        #endregion
 
         public DbSet<Team> Teams { get; set; }
     }

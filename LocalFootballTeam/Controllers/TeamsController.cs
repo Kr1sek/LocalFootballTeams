@@ -15,6 +15,11 @@ namespace LocalFootballTeam.Controllers
             _teamService = teamService;
         }
 
+        #region GetAllTeams
+        /// <summary>
+        /// Getting List of all existing Teams
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<Team>>> GetAllTeams()
         {
@@ -22,7 +27,14 @@ namespace LocalFootballTeam.Controllers
 
             return Ok(result);
         }
+        #endregion
 
+        #region GetTeam
+        /// <summary>
+        /// Showing Team by his id
+        /// </summary>
+        /// <param name="id">Taking Id of Team</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Team>> GetTeam(int id)
         {
@@ -33,7 +45,14 @@ namespace LocalFootballTeam.Controllers
 
             return Ok(result);
         }
+        #endregion
 
+        #region AddTeam
+        /// <summary>
+        /// Adding Team into Data Base
+        /// </summary>
+        /// <param name="team">Taking model of Team</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<List<Team>>> AddTeam(Team team)
         {
@@ -41,7 +60,15 @@ namespace LocalFootballTeam.Controllers
 
             return Ok(result);
         }
+        #endregion
 
+        #region UpdateTeam
+        /// <summary>
+        /// Finding a Team by his id and update him 
+        /// </summary>
+        /// <param name="id">Taking id of Team to find</param>
+        /// <param name="team">Taking model team to update finded team</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult<List<Team>>> UpdateTeam(int id, Team team)
         {
@@ -52,7 +79,14 @@ namespace LocalFootballTeam.Controllers
 
             return Ok(result);
         }
+        #endregion
 
+        #region DeleteTeam
+        /// <summary>
+        /// Removing a Team
+        /// </summary>
+        /// <param name="id">Taking Id of Team to find</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Team>> DeleteTeam(int id)
         {
@@ -63,5 +97,6 @@ namespace LocalFootballTeam.Controllers
 
             return Ok(result);
         }
+        #endregion
     }
 }
