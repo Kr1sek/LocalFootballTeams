@@ -1,7 +1,10 @@
-﻿using LocalFootballTeam.Migrations;
+﻿using Azure.Core;
+using LocalFootballTeam.Migrations;
 using LocalFootballTeam.Models.Models;
 using LocalFootballTeam.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace LocalFootballTeam.Services.Services
 {
@@ -9,7 +12,7 @@ namespace LocalFootballTeam.Services.Services
     {
 
         private readonly DataContext _context;
-
+        
         public TeamService(DataContext context)
         {
             _context = context;
@@ -78,5 +81,7 @@ namespace LocalFootballTeam.Services.Services
             return await _context.Teams.ToListAsync(); 
         }
         #endregion
+
+        
     }
 }

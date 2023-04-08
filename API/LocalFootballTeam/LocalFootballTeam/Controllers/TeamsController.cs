@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LocalFootballTeam.Models.Models;
 using LocalFootballTeam.Services.Interfaces;
+using System.IO;
 
 namespace LocalFootballTeam.Controllers
 {
@@ -9,10 +10,12 @@ namespace LocalFootballTeam.Controllers
     public class TeamsController : ControllerBase
     {
         private readonly ITeamService _teamService;
+        private readonly IWebHostEnvironment _environment;
 
-        public TeamsController(ITeamService teamService)
+        public TeamsController(ITeamService teamService, IWebHostEnvironment environment)
         {
             _teamService = teamService;
+            _environment = environment;
         }
 
         #region GetAllTeams
@@ -98,5 +101,30 @@ namespace LocalFootballTeam.Controllers
             return Ok(result);
         }
         #endregion
+
+        [Route("SaveFile")]
+        [HttpPost]
+        public JsonResult SaveFile()
+        {
+            try
+            {
+                var httpRequest = Request.Form;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = _environment.ContentRootPath + "/Logos/" + filename;
+
+                using (var stream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+
+                return new JsonResult(filename);
+            }
+            catch (Exception)
+            {
+
+                return new JsonResult("undefined.png");
+            }
+        }
     }
 }

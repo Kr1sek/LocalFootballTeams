@@ -3,6 +3,8 @@ using LocalFootballTeam.Services.Interfaces;
 using Microsoft.AspNetCore.Components.Forms;
 using LocalFootballTeam.Migrations;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,5 +36,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Logos")),
+    RequestPath = "/Logos"
+});
 
 app.Run();
