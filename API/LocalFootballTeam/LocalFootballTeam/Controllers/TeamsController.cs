@@ -73,7 +73,7 @@ namespace LocalFootballTeam.Controllers
         /// <param name="team">Taking model team to update finded team</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult<List<Team>>> UpdateTeam(int id, Team team)
+        public async Task<ActionResult<List<Team>>> UpdateTeam([FromRoute]int id, Team team)
         {
             var result = await _teamService.UpdateTeam(team, id);
 

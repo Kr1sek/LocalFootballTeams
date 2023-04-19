@@ -12,7 +12,7 @@ namespace LocalFootballTeam.Models.Models
         public string Name { get; set; } = string.Empty;
         public string Addres { get; set; } = string.Empty;
         public string StartYear { get; set; } = string.Empty;
-        public string Logo { get; set; } = string.Empty;
+        public string Logo { get; set; } = "undefined.png";
 
     }
 }
