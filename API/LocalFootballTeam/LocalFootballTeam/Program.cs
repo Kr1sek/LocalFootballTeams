@@ -18,7 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITeamService, TeamService>();
-builder.Services.AddDbContext<DataContext>();
+builder.Services.AddDbContext<DbContext>();
 
 var app = builder.Build();
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LocalFootballTeam.Migrations.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(DbContext))]
     [Migration("20230324104044_InitialCreate")]
     partial class InitialCreate
     {

@@ -11,9 +11,9 @@ namespace LocalFootballTeam.Services.Services
     public class TeamService : ITeamService
     {
 
-        private readonly DataContext _context;
+        private readonly Migrations.DbContext _context;
         
-        public TeamService(DataContext context)
+        public TeamService(Migrations.DbContext context)
         {
             _context = context;
         }
