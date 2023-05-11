@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocalFootballTeam.Migrations.Migrations
 {
     [DbContext(typeof(DbContext))]
-    [Migration("20230510161026_UserAndRoleAdd")]
+    [Migration("20230511093202_UserAndRoleAdd")]
     partial class UserAndRoleAdd
     {
         /// <inheritdoc />
@@ -40,6 +40,23 @@ namespace LocalFootballTeam.Migrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "User"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Editor"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("LocalFootballTeam.Models.Models.Team", b =>
@@ -79,7 +96,7 @@ namespace LocalFootballTeam.Migrations.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -87,11 +104,9 @@ namespace LocalFootballTeam.Migrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nationality")
@@ -99,10 +114,9 @@ namespace LocalFootballTeam.Migrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -116,9 +130,7 @@ namespace LocalFootballTeam.Migrations.Migrations
                 {
                     b.HasOne("LocalFootballTeam.Models.Models.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoleId");
 
                     b.Navigation("Role");
                 });
