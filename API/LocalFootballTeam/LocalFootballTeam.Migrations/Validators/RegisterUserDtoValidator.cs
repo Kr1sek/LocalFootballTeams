@@ -27,7 +27,7 @@ namespace LocalFootballTeam.Models.Validators
                 var isUsed = dbContext.Users.Any(u => u.Email == value);
                 if (isUsed)
                 {
-                    context.AddFailure("Email", "This email is used");
+                    context.AddFailure("Email", "This email is used"); // sprawdziuc to w postmanie
                 }
             });
         }

@@ -1,16 +1,12 @@
-﻿using LocalFootballTeam.Migrations;
-using LocalFootballTeam.Models.Dtos;
+﻿using LocalFootballTeam.Models.Dtos;
 using LocalFootballTeam.Models.Models;
 using LocalFootballTeam.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LocalFootballTeam.Services.Services
 {
@@ -48,13 +44,14 @@ namespace LocalFootballTeam.Services.Services
 
             if (user == null)
             {
-                return "Invalid password or email";
+                return null;
             }
 
-            var resuslt = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Pasword);
+            var resuslt = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+
             if (resuslt == PasswordVerificationResult.Failed)
             {
-                return "Invalid password or email";
+                return null;
             }
 
             var claims = new List<Claim>()
@@ -65,8 +62,19 @@ namespace LocalFootballTeam.Services.Services
                 new Claim("DateOfBirth", user.DateOfBirth.Value.ToString("yyyy-MM-dd")),
                 new Claim("Nationality", user.Nationality)
             };
-            
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes()
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_autheticationSettings.JwtKey));
+            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expires = DateTime.Now.AddDays(_autheticationSettings.JwtExpireDays);
+
+            var token = new JwtSecurityToken(_autheticationSettings.JwtIssuer,
+                _autheticationSettings.JwtIssuer,
+                claims,
+                expires: expires,
+                signingCredentials: cred);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            return tokenHandler.WriteToken(token);
         }
     }
 }
