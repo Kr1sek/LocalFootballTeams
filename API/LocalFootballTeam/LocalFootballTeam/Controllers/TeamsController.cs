@@ -2,6 +2,7 @@
 using LocalFootballTeam.Models.Models;
 using LocalFootballTeam.Services.Interfaces;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LocalFootballTeam.Controllers
 {
@@ -57,6 +58,7 @@ namespace LocalFootballTeam.Controllers
         /// <param name="team">Taking model of Team</param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<Team>>> AddTeam(Team team)
         {
             var result = await _teamService.AddTeam(team);
@@ -102,6 +104,11 @@ namespace LocalFootballTeam.Controllers
         }
         #endregion
 
+        #region SaveFile()
+        /// <summary>
+        /// Sending a logo of Team, and Saving it in Logos folder
+        /// </summary>
+        /// <returns></returns>
         [Route("SaveFile")]
         [HttpPost]
         public JsonResult SaveFile()
@@ -126,5 +133,6 @@ namespace LocalFootballTeam.Controllers
                 return new JsonResult("undefined.png");
             }
         }
+        #endregion
     }
 }

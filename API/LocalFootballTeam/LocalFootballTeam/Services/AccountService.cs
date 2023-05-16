@@ -22,6 +22,8 @@ namespace LocalFootballTeam.Services.Services
             _passwordHasher = passwordHasher;
             _autheticationSettings = autheticationSettings;
         }
+
+        #region RegisterUser()
         public void RegisterUser(RegisterUserDto dto)
         {
             var newUser = new User()
@@ -37,10 +39,14 @@ namespace LocalFootballTeam.Services.Services
             _dbContext.Users.Add(newUser);
             _dbContext.SaveChanges();
         }
+        #endregion
 
+        #region GenerateJwt()
         public string GenerateJwt(LoginDto dto)
         {
-            var user = _dbContext.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == dto.Email);
+            var user = _dbContext.Users
+                .Include(u => u.Role)
+                .FirstOrDefault(u => u.Email == dto.Email);
 
             if (user == null)
             {
@@ -76,5 +82,6 @@ namespace LocalFootballTeam.Services.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);
         }
+        #endregion
     }
 }

@@ -15,6 +15,12 @@ namespace LocalFootballTeam.Controllers
             _accountService = accountService;
         }
 
+        #region RegisterUser()
+        /// <summary>
+        /// Creating new User
+        /// </summary>
+        /// <param name="dto">Taking Dto paramteres (Email and Password) </param>
+        /// <returns></returns>
         [HttpPost("register")]
         public ActionResult RegisterUser([FromBody]RegisterUserDto dto)
         {
@@ -22,7 +28,14 @@ namespace LocalFootballTeam.Controllers
 
             return Ok();
         }
+        #endregion
 
+        #region Login()
+        /// <summary>
+        /// Login User and generate a Jwt Token 
+        /// </summary>
+        /// <param name="dto">Taking Dto parameters (Email and Password) </param>
+        /// <returns></returns>
         [HttpPost("login")]
         public ActionResult Login([FromBody]LoginDto dto)
         {
@@ -30,6 +43,7 @@ namespace LocalFootballTeam.Controllers
 
             return Ok(token);
         }
+        #endregion
 
     }
 }
