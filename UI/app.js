@@ -1,5 +1,7 @@
 const routes=[
-    {path:'/teams',component:teams}
+    {path: '/teams', component: Teams},
+    {path: '/login', component: Login},
+    {path: '/register', component: Register}
 ]
 
 

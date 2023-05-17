@@ -1,4 +1,4 @@
-const teams={template:`
+const Teams={template:`
 <div>
 
 <button type="button"

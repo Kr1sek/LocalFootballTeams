@@ -75,6 +75,7 @@ namespace LocalFootballTeam.Controllers
         /// <param name="team">Taking model team to update finded team</param>
         /// <returns></returns>
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<Team>>> UpdateTeam([FromRoute]int id, Team team)
         {
             var result = await _teamService.UpdateTeam(team, id);
@@ -93,6 +94,7 @@ namespace LocalFootballTeam.Controllers
         /// <param name="id">Taking Id of Team to find</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Team>> DeleteTeam(int id)
         {
             var result = await _teamService.DeleteTeam(id);
