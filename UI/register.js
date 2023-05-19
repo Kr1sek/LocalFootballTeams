@@ -1,1 +1,1 @@
-const Register = {template:`<div>register here</div>`}
+const Register = {template:`<div>register here</div>`, }

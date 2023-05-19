@@ -11,6 +11,8 @@ using LocalFootballTeam.Models.Dtos;
 using LocalFootballTeam;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using LocalFootballTeam.Interfaces;
+using LocalFootballTeam.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var autheticationSettings = new AutheticationSettings();
@@ -27,6 +29,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped <IValidator<RegisterUserDto>,RegisterUserDtoValidator>();
 builder.Services.AddDbContext<DbContext>();

@@ -133,7 +133,6 @@ methods:{
     },
 
     addClick(){
-        console.log(this.TeamId);
         this.modalTitle="Dodaj Drużynę";
         this.TeamId=0;
         this.TeamName="";
@@ -143,7 +142,6 @@ methods:{
     },
 
     editClick(team){
-        console.log(team);
         this.modalTitle="Edytuj Drużynę";
         this.TeamId=team.id;
         this.TeamName=team.name;

@@ -1,4 +1,5 @@
-﻿using LocalFootballTeam.Models.Dtos;
+﻿using LocalFootballTeam.Interfaces;
+using LocalFootballTeam.Models.Dtos;
 using LocalFootballTeam.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,13 @@ namespace LocalFootballTeam.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly IUserService _userService;
 
-        public AccountController(IAccountService accountService) 
+
+        public AccountController(IAccountService accountService, IUserService userService) 
         {
             _accountService = accountService;
+            _userService = userService;
         }
 
         #region RegisterUser()
@@ -40,8 +44,9 @@ namespace LocalFootballTeam.Controllers
         public ActionResult Login([FromBody]LoginDto dto)
         {
             string token = _accountService.GenerateJwt(dto);
+            var user = _userService.GetUserByEmail(dto.Email);
 
-            return Ok(token);
+            return Ok(new { token, user });
         }
         #endregion
 
