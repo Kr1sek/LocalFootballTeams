@@ -111,7 +111,7 @@ data(){
         TeamStartYear:"",
         LogoFileName:"undefined.png",
         LogoPath:variables.PHOTO_URL
-    };PhotoFileName
+    };
 },
 methods:{
     refreshData(){

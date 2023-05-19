@@ -42,6 +42,7 @@ namespace LocalFootballTeam.Services.Services
         #endregion
 
         #region GenerateJwt()
+        //return a JWT string
         public string GenerateJwt(LoginDto dto)
         {
             var user = _dbContext.Users
